@@ -1,7 +1,7 @@
 # Credit Card Default Risk | Project Notes
 
 ## Current stage
-Stage 1: Windows project setup (in progress).
+Stage 1: Windows project setup.
 
 ## Completed
 - Cloned the GitHub repository into C:\Projects\credit-card-default-risk.
