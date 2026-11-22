@@ -45,3 +45,12 @@ Stage 1 (environment setup) is complete. Resume at Stage 2 (data inspection).
 - Used stratified splits with random_state=42. The training set has 18,000 customers, validation has 6,000, and test has 6,000.
 - Checked all three pairs of splits. Each pair shared zero customer IDs.
 - Next: compare models using five-fold stratified cross-validation on the training set.
+
+## Stage 4: Model comparison and cutoff selection
+
+- Compared three models using the same five stratified folds within the 18,000 training customers. Mean average precision was 0.5459 for logistic regression, 0.5568 for random forest, and 0.5554 for gradient boosting.
+- Selected random forest using the highest mean average precision rule. Its lead over boosting was 0.0014.
+- Fit the selected forest on all 18,000 training customers. On 6,000 validation customers, the 0.50 cutoff produced 224 false alarms and 857 missed defaults, costing 4,509 units.
+- Selected cutoff 0.14166170167472678 using the assumption that a missed default costs five times a false alarm. It produced 1,995 false alarms and 252 missed defaults, costing 3,255 units.
+- Saved the fitted pipeline and full-precision cutoff together in artifacts/credit_default_model.pkl. Reloading the bundle reproduced the validation counts and cost.
+- Next: use the saved bundle for the first evaluation on the 6,000 held-out test customers.
