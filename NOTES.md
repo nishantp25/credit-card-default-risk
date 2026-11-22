@@ -54,3 +54,5 @@ Stage 1 (environment setup) is complete. Resume at Stage 2 (data inspection).
 - Selected cutoff 0.14166170167472678 using the assumption that a missed default costs five times a false alarm. It produced 1,995 false alarms and 252 missed defaults, costing 3,255 units.
 - Saved the fitted pipeline and full-precision cutoff together in artifacts/credit_default_model.pkl. Reloading the bundle reproduced the validation counts and cost.
 - Next: use the saved bundle for the first evaluation on the 6,000 held-out test customers.
+
+Stage 5 in progress. See [November 22 checkpoint](2026-11-22-checkpoint.md). Next: calculate group error rates from the saved test predictions.
