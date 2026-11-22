@@ -28,6 +28,7 @@ Stage 1 (environment setup) is complete. Resume at Stage 2 (data inspection).
 - Finish the Stage 1 interview questions.
 - Start Stage 2 by downloading the original UCI workbook into `data/raw/` and adding that folder to `.gitignore`.
 - Inspect the workbook headers, identify the next-month default column, and verify the row count before calculating the default rate.
+
 ## Stage 2: Data inspection
 
 - Loaded the original UCI workbook with `load_clients()` in `src/credit_risk/data.py`. Used `header=1` because the second Excel row contains descriptive column names.
@@ -36,3 +37,11 @@ Stage 1 (environment setup) is complete. Resume at Stage 2 (data inspection).
 - Found repayment codes `-2` and `0` in the workbook. UCI's published codebook leaves their meanings unspecified. Preserve them as distinct values.
 - Kept the original workbook local under `data/raw/` and verified the Git ignore rule.
 - Open item: pandas warned that support for the xlrd engine will be removed in a future version. The loader works with the pinned environment.
+
+## Stage 3: Features and data splits
+
+- Selected 19 financial inputs. Customer ID, the target, sex, marital status, age, and education are excluded from model inputs.
+- Added two features: months_with_recorded_delay and max_recorded_delay_code. Verified a real example where one month showed a delay and the highest delay code was 2.
+- Used stratified splits with random_state=42. The training set has 18,000 customers, validation has 6,000, and test has 6,000.
+- Checked all three pairs of splits. Each pair shared zero customer IDs.
+- Next: compare models using five-fold stratified cross-validation on the training set.
