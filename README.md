@@ -6,7 +6,7 @@ On 6,000 held-out customers, the random forest caught **1,043 of 1,327 defaults 
 
 ## Quick start
 
-Clone the repository, open its root folder in a terminal, and use Python 3.11.
+Clone the repository and open its root folder in a terminal. Use Python 3.11.
 
 ### 1. Create and activate a virtual environment
 
@@ -36,16 +36,16 @@ python -m pip install -r requirements.txt
 python -m streamlit run app.py
 ```
 
-Open the local URL printed in the terminal. The app starts with a real UCI customer example and the saved random forest. You can edit all 19 financial inputs: the credit limit, six repayment statuses, six bill amounts, and six payment amounts. Click **Calculate risk** to see the estimated default risk, review cutoff, and decision.
+Open the local URL printed in the terminal. The app starts with a real UCI customer example. You can edit the credit limit, six monthly repayment statuses, six bill amounts, and six payment amounts. Click **Calculate risk** to see the estimated default risk, review cutoff, and decision.
 
-To check the demo against a known result, leave all amounts and the other five months at their original values:
+To verify the demo, leave the financial amounts and the other five months at their original values:
 
 | September repayment code | Estimated risk | Decision |
 |---|---:|---|
 | `-1` (original example) | 11.382644% | No flag |
 | `2` (edited example) | 36.948080% | Flag for review |
 
-The app and the Python scoring function share the same feature calculations. The decision uses the full-precision score and cutoff before the numbers are rounded for display.
+The app uses the same feature calculations as the Python scoring function. It applies the full-precision cutoff before rounding the score for display.
 
 ### Run the command-line audit
 
@@ -53,11 +53,11 @@ The app and the Python scoring function share the same feature calculations. The
 python -m src.credit_risk
 ```
 
-The first audit run needs internet access to download the original UCI workbook. It loads the saved model and cutoff, scores the held-out customers, and saves the individual predictions locally. Later runs reuse those files.
+The first audit run needs internet access to download the original UCI workbook. The program loads the saved forest and cutoff, scores the held-out customers, and saves the individual predictions locally. Later runs reuse the local files.
 
-A successful audit reports **6,000 predictions, 0 unmatched customer IDs, 3,060 flags, 2,017 false alarms, and 284 missed defaults**. It prints group tables for recorded sex, marital status, and age band.
+A successful audit reports **6,000 predictions, 0 unmatched IDs, 3,060 flags, 2,017 false alarms, and 284 missed defaults**. It prints separate tables for recorded sex, marital status, and age band.
 
-The command-line quick start was verified on a fresh macOS clone. The model and audit also ran on Windows. Fresh-clone checks on Windows and Linux are pending.
+The complete command-line quick start was verified on a fresh macOS clone. The model and audit also ran on Windows. Fresh-clone checks on Windows and Linux are pending.
 
 ### Run the tests
 
@@ -65,7 +65,15 @@ The command-line quick start was verified on a fresh macOS clone. The model and 
 python -m pytest -q
 ```
 
-The first regression test loads the committed example and model bundle, then checks that `score_customer()` reproduces the verified score and decision. Additional tests are in progress.
+All **seven tests passed** on macOS. They cover:
+
+- The original example’s score and decision using the saved model.
+- Exclusion of `SEX`, `MARRIAGE`, and `AGE` from engineered inputs and from the fitted pipeline’s recorded input columns.
+- Repayment-delay frequency and severity for two verified cases.
+- The review decision at the cutoff and immediately below it.
+- Split sizes, customer-ID separation, and coverage of the original workbook.
+
+The split test downloads the workbook if it is missing, so the first test run on a fresh clone needs internet access. The verified run produced one pandas warning about future removal of the `xlrd` reader.
 
 ## Data and features
 
@@ -82,7 +90,7 @@ Customer ID, education, sex, marital status, age, and the outcome label are excl
 
 ## Model selection
 
-The stratified split produced 18,000 training, 6,000 validation, and 6,000 test customers. All three pairs of splits shared zero customer IDs. The models were compared on the same five training folds, using mean average precision (AP) as the selection metric.
+The stratified split produced 18,000 training, 6,000 validation, and 6,000 test customers. All three pairs of splits shared zero customer IDs. The models were compared on the same five training folds using mean average precision (AP) as the selection metric.
 
 | Model | Mean ROC-AUC | Mean PR-AUC (trapezoidal) | Mean AP |
 |---|---:|---:|---:|
@@ -111,8 +119,8 @@ In the highest-risk test group, mean predicted risk was 68.16% and the observed 
 
 The audit reports flag, false-alarm, and missed-default rates with their denominators. For example, the model missed 6 of 23 defaults in the 60+ group. One additional miss would move that group's missed-default rate from 26.09% to 30.43%. [Full results and group tables](reports/RESULTS.md)
 
-The data cover one historical cohort in Taiwan. The group comparisons describe that cohort, and the 5:1 cost ratio is an assumption. Different costs could favor a different review cutoff.
+The data cover one historical cohort in Taiwan. The group comparisons describe that cohort. The 5:1 cost ratio is a project assumption, and different costs could favor a different review cutoff.
 
 ## Project status
 
-The data pipeline, evaluation, group audit, and local Streamlit demo are complete. The first scoring regression test passes. Work continues on test coverage and deployment. [Project notes](NOTES.md)
+The data pipeline, model evaluation, group audit, local Streamlit demo, and seven-test suite are complete. The next stage is deployment and verification of the live app against the two locally verified examples. [Project notes](NOTES.md)
