@@ -63,3 +63,16 @@ if __name__ == "__main__":
     print("Total flagged:", sex_summary["flagged"].sum())
     print("Total false alarms:", sex_summary["false_alarms"].sum())
     print("Total missed defaults:", sex_summary["missed_defaults"].sum())
+    marriage_summary = summarize_errors(audit, "MARRIAGE")
+    print("\nAudit by marital status")
+    print(marriage_summary.to_string(float_format="{:.2%}".format))
+    audit["age_band"] = pd.cut(
+        audit["AGE"],
+        bins=[float("-inf"), 30, 40, 50, 60, float("inf")],
+        labels=["Under 30", "30–39", "40–49", "50–59", "60+"],
+        right=False,
+    )
+
+    age_summary = summarize_errors(audit, "age_band")
+    print("\nAudit by age band")
+    print(age_summary.to_string(float_format="{:.2%}".format))
