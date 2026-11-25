@@ -1,0 +1,23 @@
+[
+  {
+    "LIMIT_BAL":50000,
+    "PAY_0":-1,
+    "PAY_2":-1,
+    "PAY_3":-1,
+    "PAY_4":-1,
+    "PAY_5":0,
+    "PAY_6":0,
+    "BILL_AMT1":1540,
+    "BILL_AMT2":26060,
+    "BILL_AMT3":0,
+    "BILL_AMT4":2650,
+    "BILL_AMT5":3320,
+    "BILL_AMT6":2764,
+    "PAY_AMT1":26060,
+    "PAY_AMT2":0,
+    "PAY_AMT3":3472,
+    "PAY_AMT4":2320,
+    "PAY_AMT5":1764,
+    "PAY_AMT6":2841
+  }
+]
