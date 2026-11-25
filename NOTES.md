@@ -2,7 +2,7 @@
 
 ## Current checkpoint
 
-**Stages 1–7 are complete. Resume at Stage 8: deploy the Streamlit app and verify the live demo.**
+**Stages 1–8 are complete. Both hosted scoring checks match the local results. Next: portfolio interview practice.**
 
 The latest local run of `python -m pytest -q` finished with **7 passed, 1 warning in 2.08 seconds** on macOS. The warning concerns the Excel reader. The frozen model, cutoff, and both browser reference scores are recorded below.
 
@@ -100,17 +100,16 @@ python -m pytest -q
 - Correct split sizes alone cannot prove customer isolation. Checking ID overlap detects leakage, and checking the union detects missing customers.
 - The split test emitted `Pandas4Warning` at `src/credit_risk/data.py` when pandas read the `.xls` workbook. The pinned reader successfully loaded the data. During a future dependency update, evaluate the suggested `calamine` engine and rerun the suite.
 
-## Stage 8 | Next session
+## Stage 8 | Deployment and live verification
 
-1. Commit the completed Stage 7 tests and updated documentation, then confirm the deployment branch contains `app.py`, `examples/customer.json`, `requirements.txt`, and `artifacts/credit_default_model.pkl`.
-2. Deploy the Streamlit app using `app.py` as the entry point and Python 3.11.
-3. Check the original example in the live browser: 11.382644% risk and No flag.
-4. Change only September from `-1` to `2`: 36.948080% risk and Flag for review.
-5. Add the verified deployment link to `README.md` and record the live checks here.
-6. Prepare three resume bullets using measured project results, ten interview questions with short answers, and a five-question mock interview conducted one question at a time.
+- Deployed the GitHub repository `nishantp25/credit-card-default-risk` from `main` using `app.py` as the entry point. [Open the live Streamlit app](https://nishantp25-credit-card-default-risk.streamlit.app/)
+- Verified the hosted example with September set to `-1`: 11.382644% risk, below the displayed 14.166170% cutoff, giving **No flag**.
+- Changed only September to `2` and submitted the form: 36.948080% risk, above the same cutoff, giving **Flag for review**.
+- Both cases matched the local app. The edited example tests the form and scoring path. It is separate from the held-out performance measurements.
+- Follow-up items: check the link while signed out before sharing it with recruiters, verify fresh Windows and Linux clones, and revisit the Excel reader when updating dependencies.
 
 ## Resume in a new chat
 
-Continue my credit-card-default-risk portfolio project at Stage 8. The local Streamlit app works and all seven tests passed. Start by checking the Git state, then walk me through deployment one small step at a time. Give me complete README.md and NOTES.md files whenever either needs an update. I handle all GitHub pushes myself.
+The project is deployed and the seven-test suite passed. Resume interview practice one question at a time. Use the actual results in this file and in reports/RESULTS.md. Give me complete README.md and NOTES.md files whenever either needs an update. I handle all GitHub pushes myself.
 
 [November 22 checkpoint](2026-11-22-checkpoint.md) · [Full measured results](reports/RESULTS.md)

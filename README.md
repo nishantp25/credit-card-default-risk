@@ -1,5 +1,7 @@
 # Credit Card Default Risk
 
+[Open the live Streamlit app](https://nishantp25-credit-card-default-risk.streamlit.app/)
+
 Can six months of credit card history help predict next-month default? This project compares three classifiers, selects a review cutoff on validation data, and serves the selected model through a Streamlit app.
 
 On 6,000 held-out customers, the random forest caught **1,043 of 1,327 defaults (78.60% recall)**. It flagged **3,060 customers (51.00%)**, and **34.08%** of flagged customers actually defaulted.
@@ -38,7 +40,7 @@ python -m streamlit run app.py
 
 Open the local URL printed in the terminal. The app starts with a real UCI customer example. You can edit the credit limit, six monthly repayment statuses, six bill amounts, and six payment amounts. Click **Calculate risk** to see the estimated default risk, review cutoff, and decision.
 
-To verify the demo, leave the financial amounts and the other five months at their original values:
+The following results matched on the local and deployed apps. To reproduce them, leave the financial amounts and the other five months at their original values:
 
 | September repayment code | Estimated risk | Decision |
 |---|---:|---|
@@ -123,4 +125,4 @@ The data cover one historical cohort in Taiwan. The group comparisons describe t
 
 ## Project status
 
-The data pipeline, model evaluation, group audit, local Streamlit demo, and seven-test suite are complete. The next stage is deployment and verification of the live app against the two locally verified examples. [Project notes](NOTES.md)
+The app is deployed on Streamlit Community Cloud. Both live checks reproduced the local scores and decisions. The seven-test suite passed on macOS. [Project notes](NOTES.md)
